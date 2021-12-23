@@ -53,19 +53,23 @@ export default function Home() {
     }, [count]);
 
     useEffect(() => {
+        clearInterval(intervalId)
+        if(isOn === true) {
+            toggleIsOn()
+        }
         setCount(sessions[currentSession].seconds)
     }, [currentSession])
-
+    
     return (
-        <div className="h-screen w-full bg-transparent p-5">
+        <div className={`h-screen w-full md:p-5 bg-white`}>
             <div className="max-w-5xl mx-auto">
                 <div className="md:w-4/12 mx-auto">
-                    <div className="rounded-xl bg-red-300 p-6 flex flex-col space-y-4">
+                    <div className="rounded-xl bg-neutral-500 p-6 flex flex-col space-y-6">
                         <div className="flex flex-row items-center justify-items-center justify-center space-x-2 w-full">
                             {sessions.map((session, i) => {
                                 return (
                                     <button
-                                        className={`rounded px-3 py-2 text-white text-xs font-medium ${currentSession === i && "bg-red-500"}`}
+                                        className={`rounded px-3 py-2 text-white text-xs font-medium ${currentSession === i && "bg-neutral-400"}`}
                                         onClick={() => { setCurrentSession(i) }}
                                     >
                                         {session.label}
@@ -76,7 +80,7 @@ export default function Home() {
                         </div>
                         <h1 className="text-7xl text-white font-semibold text-center">{pad((count - (count % 60)) / 60, 2)}:{pad(count % 60, 2)}</h1>
                         <button
-                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-30 relative inline-block start-button ${isOn ? 'bg-red-500 text-white' : 'bg-white text-red-500'}`}
+                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-30 relative inline-block start-button ${isOn ? 'bg-neutral-300 text-white active' : 'bg-white text-neutral-400'}`}
                             onClick={toggleIsOn}
                         >
                             {!isOn ? "start" : "stop"}

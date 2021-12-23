@@ -2,8 +2,8 @@
     box-shadow: rgb(235 235 235) 0px 6px 0px;
 }
 
-.start-button.bg-red-500 {
-    box-shadow: rgb(255, 211, 211) 0px 6px 0px;
+.start-button.active {
+    box-shadow: rgb(179, 179, 179) 0px 6px 0px;
 }
 
 .start-button:active {
