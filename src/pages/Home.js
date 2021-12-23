@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import useToggle from 'hooks/useToggle'
 import cn from 'classnames'
 import "./Home.css"
@@ -10,9 +11,9 @@ function pad(num, size) {
 }
 
 export default function Home() {
-
     const [isOn, toggleIsOn] = useToggle()
-
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [dark, setDark] = useState(false)
     const pomodoroSeconds = 25 * 60;
     const shortBreakSeconds = 5 * 60;
     const longBreakSeconds = 20 * 60;
@@ -30,6 +31,11 @@ export default function Home() {
     useEffect(() => {
         return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(() => {
+        console.log(Boolean(searchParams.get('dark')))
+        setDark(Boolean(searchParams.get('dark')))
+    }, [searchParams])
 
     useEffect(() => {
         if (isOn === true) {
@@ -54,14 +60,14 @@ export default function Home() {
 
     useEffect(() => {
         clearInterval(intervalId)
-        if(isOn === true) {
+        if (isOn === true) {
             toggleIsOn()
         }
         setCount(sessions[currentSession].seconds)
     }, [currentSession])
-    
+
     return (
-        <div className={`h-screen w-full md:p-5 bg-transparent md:bg-white`}>
+        <div className={`h-screen w-full md:p-5`} style={{ backgroundColor: dark ? '#303437' : '#fff' }}>
             <div className="max-w-5xl mx-auto">
                 <div className="md:w-4/12 mx-auto">
                     <div className="rounded-xl bg-neutral-500 p-6 flex flex-col space-y-6 h-screen md:h-min">
