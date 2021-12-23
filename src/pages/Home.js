@@ -64,7 +64,7 @@ export default function Home() {
         <div className={`h-screen w-full md:p-5 bg-white`}>
             <div className="max-w-5xl mx-auto">
                 <div className="md:w-4/12 mx-auto">
-                    <div className="rounded-xl bg-neutral-500 p-6 flex flex-col space-y-6">
+                    <div className="rounded-none md:rounded-xl bg-neutral-500 p-6 flex flex-col space-y-6 h-screen md:h-min">
                         <div className="flex flex-row items-center justify-items-center justify-center space-x-2 w-full">
                             {sessions.map((session, i) => {
                                 return (
