@@ -57,7 +57,7 @@ export default function Home() {
     }, [currentSession])
 
     return (
-        <div className="h-screen w-full bg-red-400 p-5">
+        <div className="h-screen w-full bg-transparent p-5">
             <div className="max-w-5xl mx-auto">
                 <div className="md:w-4/12 mx-auto">
                     <div className="rounded-xl bg-red-300 p-6 flex flex-col space-y-4">
