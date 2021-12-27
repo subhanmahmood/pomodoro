@@ -101,7 +101,7 @@ export default function Home() {
                         </div>
                         <h1 className="text-7xl text-white font-semibold text-center">{pad((count - (count % 60)) / 60, 2)}:{pad(count % 60, 2)}</h1>
                         <button
-                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-1 relative inline-block start-button transition-all ${isOn ? `bg-${currentColor}-300 text-white active` : `bg-white text-${currentColor}-400`}`}
+                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-1 relative inline-block start-button ${isOn ? `bg-${currentColor}-300 text-white active` : `bg-white text-${currentColor}-400`}`}
                             onClick={toggleIsOn}
                         >
                             {!isOn ? "start" : "stop"}
@@ -110,7 +110,7 @@ export default function Home() {
                 </div>
             </div>
             {isOpen &&
-                <div id="default-modal" aria-hidden="true" className={`overflow-y-auto overflow-x-hidden fixed w-full left-0 top-0 z-50 flex justify-center items-start h-modal md:h-screen md:inset-0 bg-neutral-700 bg-opacity-50`}>
+                <div id="default-modal" aria-hidden="true" className={`overflow-y-auto overflow-x-hidden fixed w-full left-0 top-0 z-50 flex justify-center items-start h-screen md:inset-0 bg-neutral-700 bg-opacity-50`}>
                     <div className="relative px-4 w-full max-w-2xl h-full md:h-auto mt-12">
                         <div className={`relative bg-white rounded-lg shadow dark:bg-neutral-700 transition-all`}>
                             <div className={`flex justify-between items-start p-5 rounded-t border-b dark:border-neutral-600 transition-all`}>
