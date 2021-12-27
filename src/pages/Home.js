@@ -16,13 +16,13 @@ export default function Home() {
     const [isOn, toggleIsOn] = useToggle()
     const [searchParams, setSearchParams] = useSearchParams()
     const [dark, setDark] = useState(false)
-    const pomodoroSeconds = 25 * 60;
+    const pomodoroSeconds = 0.1 * 60;
     const shortBreakSeconds = 5 * 60;
     const longBreakSeconds = 20 * 60;
     const sessions = [
-        { label: 'pomodoro', seconds: pomodoroSeconds },
-        { label: 'short break', seconds: shortBreakSeconds },
-        { label: 'long break', seconds: longBreakSeconds },
+        { label: 'pomodoro', seconds: pomodoroSeconds, color: 'red' },
+        { label: 'short break', seconds: shortBreakSeconds, color: 'blue' },
+        { label: 'long break', seconds: longBreakSeconds, color: 'teal' },
 
     ]
     const [currentSession, setCurrentSession] = useState(0)
@@ -80,17 +80,17 @@ export default function Home() {
     }
 
 
-
+    const currentColor = sessions[currentSession].color
     return (
         <div className={`h-screen w-full md:p-5`} style={{ backgroundColor: dark ? '#303437' : '#fff' }}>
             <div className="max-w-5xl mx-auto">
                 <div className="md:w-4/12 mx-auto">
-                    <div className="rounded-xl bg-neutral-500 p-6 flex flex-col space-y-6 h-screen md:h-min">
+                    <div className={`rounded-xl bg-${currentColor}-500 transition-all p-6 flex flex-col space-y-6 h-screen md:h-min`}>
                         <div className="flex flex-row items-center justify-items-center justify-center space-x-2 w-full">
                             {sessions.map((session, i) => {
                                 return (
                                     <button
-                                        className={`rounded px-3 py-2 text-white text-xs font-medium ${currentSession === i && "bg-neutral-400"}`}
+                                        className={`rounded px-3 py-2 text-white text-xs font-medium transition-all ${currentSession === i && `bg-${currentColor}-400`}`}
                                         onClick={() => { setSession(i) }}
                                     >
                                         {session.label}
@@ -101,7 +101,7 @@ export default function Home() {
                         </div>
                         <h1 className="text-7xl text-white font-semibold text-center">{pad((count - (count % 60)) / 60, 2)}:{pad(count % 60, 2)}</h1>
                         <button
-                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-1 relative inline-block start-button ${isOn ? 'bg-neutral-300 text-white active' : 'bg-white text-neutral-400'}`}
+                            className={`transition-all px-10 mx-auto max-w-max py-3 uppercase rounded-md z-1 relative inline-block start-button transition-all ${isOn ? `bg-${currentColor}-300 text-white active` : `bg-white text-${currentColor}-400`}`}
                             onClick={toggleIsOn}
                         >
                             {!isOn ? "start" : "stop"}
@@ -110,29 +110,59 @@ export default function Home() {
                 </div>
             </div>
             {isOpen &&
-                <div id="default-modal" aria-hidden="true" className="overflow-y-auto overflow-x-hidden fixed w-full left-0 top-0 z-50 flex justify-center items-start h-modal md:h-screen md:inset-0 bg-neutral-700 bg-opacity-50">
+                <div id="default-modal" aria-hidden="true" className={`overflow-y-auto overflow-x-hidden fixed w-full left-0 top-0 z-50 flex justify-center items-start h-modal md:h-screen md:inset-0 bg-neutral-700 bg-opacity-50`}>
                     <div className="relative px-4 w-full max-w-2xl h-full md:h-auto mt-12">
-                        <div className="relative bg-white rounded-lg shadow dark:bg-neutral-700">
-                            <div className="flex justify-between items-start p-5 rounded-t border-b dark:border-neutral-600">
-                                <h3 className="text-xl font-semibold text-neutral-900 lg:text-2xl dark:text-white">
+                        <div className={`relative bg-white rounded-lg shadow dark:bg-neutral-700 transition-all`}>
+                            <div className={`flex justify-between items-start p-5 rounded-t border-b dark:border-neutral-600 transition-all`}>
+                                <h3 className={`text-xl font-semibold text-neutral-900 transition-all lg:text-2xl dark:text-white`}>
                                     Terms of Service
                                 </h3>
-                                <button onClick={() => setIsOpen(false)} type="button" className="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-600 dark:hover:text-white" data-modal-toggle="default-modal">
+                                <button onClick={() => setIsOpen(false)} type="button" className={`text-neutral-400 transition-all bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-600 dark:hover:text-white`} data-modal-toggle="default-modal">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                 </button>
                             </div>
-                            <div className="p-6 space-y-6 dark:text-neutral-200">
+                            <div className={`p-6 space-y-6 dark:text-neutral-200 transition-all`}>
                                 You have a timer running, are you sure you want to switch?
                             </div>
-                            <div className="flex items-center p-6 space-x-2 rounded-b border-t border-neutral-200 dark:border-neutral-600">
+                            <div className={`flex items-center p-6 space-x-2 rounded-b border-t border-neutral-200 transition-all dark:border-neutral-600`}>
                                 <button onClick={() => {
                                     setCurrentSession(intermediateSesssion)
-                                    setIsOpen(false)}} type="button" className="text-neutral-800 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-neutral-200 dark:hover:bg-neutral-300">Yes</button>
-                                <button onClick={() => setIsOpen(false)} type="button" className="text-neutral-500 bg-white hover:bg-neutral-100 focus:ring-4 focus:ring-neutral-300 rounded-lg border border-neutral-200 text-sm font-medium px-5 py-2.5 hover:text-neutral-900 focus:z-10 dark:bg-neutral-700 dark:text-neutral-300 dark:border-neutral-500 dark:hover:text-white dark:hover:bg-neutral-600">No</button>
+                                    setIsOpen(false)}} type="button" className={`text-neutral-800 transition-all bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-neutral-200 dark:hover:bg-neutral-300`}>Yes</button>
+                                <button onClick={() => setIsOpen(false)} type="button" className={`text-neutral-500 transition-all bg-white hover:bg-neutral-100 focus:ring-4 focus:ring-neutral-300 rounded-lg border border-neutral-200 text-sm font-medium px-5 py-2.5 hover:text-neutral-900 focus:z-10 dark:bg-neutral-700 dark:text-neutral-300 dark:border-neutral-500 dark:hover:text-white dark:hover:bg-neutral-600`}>No</button>
                             </div>
                         </div>
                     </div>
                 </div>}
+
+            <div className="hidden">
+                <div className="bg-red-100"></div>
+                <div className="bg-red-200"></div>
+                <div className="bg-red-300"></div>
+                <div className="bg-red-400"></div>
+                <div className="bg-red-500"></div>
+                <div className="bg-red-600"></div>
+                <div className="bg-red-700"></div>
+                <div className="bg-red-800"></div>
+                <div className="bg-red-900"></div>
+                <div className="bg-blue-100"></div>
+                <div className="bg-blue-200"></div>
+                <div className="bg-blue-300"></div>
+                <div className="bg-blue-400"></div>
+                <div className="bg-blue-500"></div>
+                <div className="bg-blue-600"></div>
+                <div className="bg-blue-700"></div>
+                <div className="bg-blue-800"></div>
+                <div className="bg-blue-900"></div>
+                <div className="bg-teal-100"></div>
+                <div className="bg-teal-200"></div>
+                <div className="bg-teal-300"></div>
+                <div className="bg-teal-400"></div>
+                <div className="bg-teal-500"></div>
+                <div className="bg-teal-600"></div>
+                <div className="bg-teal-700"></div>
+                <div className="bg-teal-800"></div>
+                <div className="bg-teal-900"></div>
+            </div>
         </div>
     )
 }
