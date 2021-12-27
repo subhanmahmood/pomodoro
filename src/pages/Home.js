@@ -16,7 +16,7 @@ export default function Home() {
     const [isOn, toggleIsOn] = useToggle()
     const [searchParams, setSearchParams] = useSearchParams()
     const [dark, setDark] = useState(false)
-    const pomodoroSeconds = 0.1 * 60;
+    const pomodoroSeconds = 25 * 60;
     const shortBreakSeconds = 5 * 60;
     const longBreakSeconds = 20 * 60;
     const sessions = [
